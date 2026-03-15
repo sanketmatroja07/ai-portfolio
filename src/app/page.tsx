@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Brain, Cpu, Rocket, Zap } from "lucide-react";
 import { getFeaturedProjects, projects } from "@/data/projects";
 import { getUsedTechnologies } from "@/data/technologies";
@@ -36,37 +37,54 @@ export default function HomePage() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-transparent dark:from-blue-950/20 dark:to-transparent" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8 py-24 lg:py-32">
-          <AnimatedSection className="max-w-3xl">
-            <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-4 tracking-wide uppercase">
-              AI Engineer
-            </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-white leading-[1.1]">
-              I build AI{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600">
-                that ships.
-              </span>
-            </h1>
-            <p className="mt-6 text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed">
-              Fraud detection engines. Recommendation systems. NLP sentiment pipelines.
-              LLM-powered tools. I don&apos;t just use AI — I architect the systems
-              that make it useful. From data pipeline to production deployment.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/projects"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-medium hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors active:scale-[0.98]"
-              >
-                See What I&apos;ve Built
-                <ArrowRight size={16} />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors active:scale-[0.98]"
-              >
-                Have an AI Problem?
-              </Link>
-            </div>
-          </AnimatedSection>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <AnimatedSection className="order-2 lg:order-1">
+              <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-4 tracking-wide uppercase">
+                AI Engineer
+              </p>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-white leading-[1.1]">
+                I build AI{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600">
+                  that ships.
+                </span>
+              </h1>
+              <p className="mt-6 text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed">
+                Fraud detection engines. Recommendation systems. NLP sentiment pipelines.
+                LLM-powered tools. I don&apos;t just use AI — I architect the systems
+                that make it useful. From data pipeline to production deployment.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link
+                  href="/projects"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-medium hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors active:scale-[0.98]"
+                >
+                  See What I&apos;ve Built
+                  <ArrowRight size={16} />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors active:scale-[0.98]"
+                >
+                  Have an AI Problem?
+                </Link>
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={0.2} className="order-1 lg:order-2 flex justify-center lg:justify-end">
+              <div className="relative">
+                <div className="absolute -inset-4 rounded-full bg-blue-500/10 dark:bg-blue-400/10 blur-2xl" />
+                <div className="relative w-56 h-56 sm:w-72 sm:h-72 rounded-full overflow-hidden shadow-xl ring-2 ring-white/20 dark:ring-zinc-700/30">
+                  <Image
+                    src="/photo.png"
+                    alt="Sanket Matroja"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 224px, 288px"
+                    priority
+                  />
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 
