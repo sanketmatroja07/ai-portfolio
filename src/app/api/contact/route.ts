@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
 
 export async function POST(request: Request) {
   try {
@@ -28,26 +26,32 @@ export async function POST(request: Request) {
       timestamp: new Date().toISOString(),
     };
 
-    console.log("[Contact Form Submission]", entry);
+    // Log to server console (visible in Vercel logs)
+    console.log("[Contact Submission]", JSON.stringify(entry));
 
-    const dataDir = join(process.cwd(), "data");
-    await mkdir(dataDir, { recursive: true });
-    const filePath = join(dataDir, "contact-submissions.json");
-
-    let submissions: unknown[] = [];
-    try {
-      const { readFile } = await import("fs/promises");
-      const existing = await readFile(filePath, "utf-8");
-      submissions = JSON.parse(existing);
-    } catch {
-      // File doesn't exist yet
+    // If CONTACT_EMAIL env var is set, use Web3Forms (free, no signup needed for basic)
+    // Otherwise, just log. In production, set up Resend/SendGrid/Web3Forms.
+    const web3formsKey = process.env.WEB3FORMS_KEY;
+    if (web3formsKey) {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: web3formsKey,
+          subject: `Portfolio Contact: ${name.trim()}`,
+          from_name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+        }),
+      });
+      if (!res.ok) {
+        throw new Error(`Web3Forms responded with ${res.status}`);
+      }
     }
 
-    submissions.push(entry);
-    await writeFile(filePath, JSON.stringify(submissions, null, 2));
-
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error("[Contact Error]", err);
     return NextResponse.json(
       { error: "Failed to process submission." },
       { status: 500 }

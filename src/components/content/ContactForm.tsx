@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { Send, Loader2, CheckCircle, AlertCircle, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MagneticButton } from "@/components/effects/MagneticButton";
 
 interface FormErrors {
   name?: string;
@@ -17,6 +19,65 @@ function validate(form: { name: string; email: string; message: string }): FormE
   if (!form.message.trim()) errors.message = "Message is required.";
   else if (form.message.trim().length < 10) errors.message = "Message must be at least 10 characters.";
   return errors;
+}
+
+function FloatingInput({
+  id,
+  label,
+  type = "text",
+  value,
+  onChange,
+  onBlur,
+  error,
+  touched,
+  disabled,
+}: {
+  id: string;
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (v: string) => void;
+  onBlur: () => void;
+  error?: string;
+  touched?: boolean;
+  disabled?: boolean;
+}) {
+  return (
+    <div className="relative">
+      <input
+        id={id}
+        type={type}
+        required
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onBlur={onBlur}
+        placeholder=" "
+        disabled={disabled}
+        aria-invalid={touched && !!error}
+        aria-describedby={error ? `${id}-error` : undefined}
+        className="floating-input peer w-full px-4 pt-5 pb-2 text-sm rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder-transparent focus:outline-none transition-all duration-300 aria-[invalid=true]:border-red-400 aria-[invalid=true]:focus:ring-red-500/20 disabled:opacity-50"
+      />
+      <label
+        htmlFor={id}
+        className="floating-label absolute left-4 top-3.5 text-sm text-zinc-400 dark:text-zinc-500 transition-all duration-200 pointer-events-none origin-left peer-focus:translate-y-[-0.9rem] peer-focus:scale-[0.85] peer-focus:text-blue-500 peer-[:not(:placeholder-shown)]:translate-y-[-0.9rem] peer-[:not(:placeholder-shown)]:scale-[0.85]"
+      >
+        {label}
+      </label>
+      <AnimatePresence>
+        {touched && error && (
+          <motion.p
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            id={`${id}-error`}
+            className="mt-1 text-xs text-red-500"
+          >
+            {error}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }
 
 export function ContactForm() {
@@ -64,10 +125,24 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center" role="status" aria-live="polite">
-        <CheckCircle size={48} className="text-green-500 mb-4" aria-hidden="true" />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex flex-col items-center justify-center py-16 text-center"
+        role="status"
+        aria-live="polite"
+      >
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.1 }}
+        >
+          <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4 mx-auto">
+            <CheckCircle size={32} className="text-green-500" aria-hidden="true" />
+          </div>
+        </motion.div>
         <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2">
-          Got it.
+          Message Sent
         </h3>
         <p className="text-zinc-600 dark:text-zinc-400 mb-2">
           I&apos;ll get back to you within 24 hours.
@@ -82,115 +157,109 @@ export function ContactForm() {
             setErrors({});
             setTouched({});
           }}
-          className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+          className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
         >
           Send another message
         </button>
-      </div>
+      </motion.div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} noValidate aria-busy={status === "sending"}>
-      {status === "error" && (
-        <div className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30 flex items-start gap-2" role="alert">
-          <AlertCircle size={16} className="text-red-500 mt-0.5 shrink-0" aria-hidden="true" />
-          <p className="text-sm text-red-700 dark:text-red-400">Something went wrong. Please try again.</p>
-        </div>
-      )}
-
-      <div className="space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
-            >
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              required
-              value={form.name}
-              onChange={(e) => handleChange("name", e.target.value)}
-              onBlur={() => handleBlur("name")}
-              aria-invalid={touched.name && !!errors.name}
-              aria-describedby={errors.name ? "name-error" : undefined}
-              className="w-full px-4 py-2.5 text-sm rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors aria-[invalid=true]:border-red-400 aria-[invalid=true]:focus:ring-red-500/20"
-              placeholder="Your name"
-              disabled={status === "sending"}
-            />
-            {touched.name && errors.name && (
-              <p id="name-error" className="mt-1 text-xs text-red-500">{errors.name}</p>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              required
-              value={form.email}
-              onChange={(e) => handleChange("email", e.target.value)}
-              onBlur={() => handleBlur("email")}
-              aria-invalid={touched.email && !!errors.email}
-              aria-describedby={errors.email ? "email-error" : undefined}
-              className="w-full px-4 py-2.5 text-sm rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors aria-[invalid=true]:border-red-400 aria-[invalid=true]:focus:ring-red-500/20"
-              placeholder="you@example.com"
-              disabled={status === "sending"}
-            />
-            {touched.email && errors.email && (
-              <p id="email-error" className="mt-1 text-xs text-red-500">{errors.email}</p>
-            )}
-          </div>
-        </div>
-        <div>
-          <label
-            htmlFor="message"
-            className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
+      <AnimatePresence>
+        {status === "error" && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30 flex items-start gap-2"
+            role="alert"
           >
-            Message
-          </label>
+            <AlertCircle size={16} className="text-red-500 mt-0.5 shrink-0" aria-hidden="true" />
+            <p className="text-sm text-red-700 dark:text-red-400">Something went wrong. Please try again.</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="space-y-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <FloatingInput
+            id="name"
+            label="Your name"
+            value={form.name}
+            onChange={(v) => handleChange("name", v)}
+            onBlur={() => handleBlur("name")}
+            error={errors.name}
+            touched={touched.name}
+            disabled={status === "sending"}
+          />
+          <FloatingInput
+            id="email"
+            label="Email address"
+            type="email"
+            value={form.email}
+            onChange={(v) => handleChange("email", v)}
+            onBlur={() => handleBlur("email")}
+            error={errors.email}
+            touched={touched.email}
+            disabled={status === "sending"}
+          />
+        </div>
+        <div className="relative">
           <textarea
             id="message"
             required
             rows={5}
             value={form.message}
+            placeholder=" "
             onChange={(e) => handleChange("message", e.target.value)}
             onBlur={() => handleBlur("message")}
+            disabled={status === "sending"}
             aria-invalid={touched.message && !!errors.message}
             aria-describedby={errors.message ? "message-error" : undefined}
-            className="w-full px-4 py-2.5 text-sm rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors resize-none aria-[invalid=true]:border-red-400 aria-[invalid=true]:focus:ring-red-500/20"
-            placeholder="Tell me about your AI problem or project..."
-            disabled={status === "sending"}
+            className="floating-input peer w-full px-4 pt-5 pb-2 text-sm rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder-transparent focus:outline-none transition-all duration-300 resize-none aria-[invalid=true]:border-red-400 disabled:opacity-50"
           />
-          {touched.message && errors.message && (
-            <p id="message-error" className="mt-1 text-xs text-red-500">{errors.message}</p>
-          )}
+          <label
+            htmlFor="message"
+            className="floating-label absolute left-4 top-3.5 text-sm text-zinc-400 dark:text-zinc-500 transition-all duration-200 pointer-events-none origin-left peer-focus:translate-y-[-0.9rem] peer-focus:scale-[0.85] peer-focus:text-blue-500 peer-[:not(:placeholder-shown)]:translate-y-[-0.9rem] peer-[:not(:placeholder-shown)]:scale-[0.85]"
+          >
+            Tell me about your AI problem...
+          </label>
+          <AnimatePresence>
+            {touched.message && errors.message && (
+              <motion.p
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                id="message-error"
+                className="mt-1 text-xs text-red-500"
+              >
+                {errors.message}
+              </motion.p>
+            )}
+          </AnimatePresence>
         </div>
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:ring-offset-2 dark:focus:ring-offset-zinc-950 transition-all active:scale-[0.98] disabled:opacity-50"
-        >
-          {status === "sending" ? (
-            <>
-              <Loader2 size={16} className="animate-spin" aria-hidden="true" />
-              Sending...
-            </>
-          ) : (
-            <>
-              <Send size={16} aria-hidden="true" />
-              Send Message
-            </>
-          )}
-        </button>
+
+        <MagneticButton className="inline-block">
+          <button
+            type="submit"
+            disabled={status === "sending"}
+            className="group inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-sm font-medium hover:shadow-lg hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:ring-offset-2 dark:focus:ring-offset-zinc-950 transition-all active:scale-[0.98] disabled:opacity-50"
+          >
+            {status === "sending" ? (
+              <>
+                <Loader2 size={16} className="animate-spin" aria-hidden="true" />
+                Sending...
+              </>
+            ) : (
+              <>
+                <Send size={16} aria-hidden="true" />
+                Send Message
+              </>
+            )}
+          </button>
+        </MagneticButton>
       </div>
     </form>
   );

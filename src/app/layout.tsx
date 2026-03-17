@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
+import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import "./globals.css";
 
@@ -37,7 +38,7 @@ const jsonLd = {
   name: "Sanket Matroja",
   jobTitle: "AI Engineer",
   url: "https://sanketmatroja.com",
-  email: "sanketmatroja07@gmail.com",
+  email: "sanket@sanketmatroja.com",
   sameAs: [
     "https://www.linkedin.com/in/sanketmatroja07/",
     "https://github.com/sanketmatroja07",
@@ -68,6 +69,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >
         <ThemeProvider>
+          <ScrollProgress />
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg focus:text-sm focus:font-medium"
@@ -75,7 +77,9 @@ export default function RootLayout({
             Skip to content
           </a>
           <Navbar />
-          <main id="main-content" className="min-h-screen pt-16">{children}</main>
+          <main id="main-content" className="min-h-screen pt-16">
+            {children}
+          </main>
           <Footer />
           <ScrollToTop />
         </ThemeProvider>

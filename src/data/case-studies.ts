@@ -13,11 +13,11 @@ export const caseStudies: CaseStudy[] = [
     outcome:
       "The composable architecture allows new detection rules to be created in minutes rather than days. The rule type system is extensible — adding a new detection strategy requires implementing a single interface. The portable database types (SQLite for dev, PostgreSQL for prod) enable rapid local development with production parity. LLM-optional narrative generation means the platform degrades gracefully without API keys.",
     highlights: [
-      "5 composable rule types with a common interface",
-      "Composite boolean logic for complex detection",
-      "Background workers for async event processing",
-      "Portable DB: SQLite dev / PostgreSQL prod parity",
-      "LLM-optional: graceful fallback to rule-based narratives",
+      "Rule creation: minutes instead of days",
+      "5 composable detection strategies",
+      "Async pipeline via Redis workers",
+      "Zero-downtime LLM fallback",
+      "Dev/prod DB parity (SQLite/PostgreSQL)",
     ],
   },
   {
@@ -32,11 +32,11 @@ export const caseStudies: CaseStudy[] = [
     outcome:
       "Zero LLM costs with sub-50ms recommendation latency. The MMR diversification ensures users see variety rather than a cluster of similar cafes. Configurable weights mean the business can A/B test different scoring strategies without code changes. The multi-frontend architecture (consumer, admin, widget, B2B) allows the recommendation engine to serve different contexts through a single API.",
     highlights: [
-      "Weighted cosine similarity for preference matching",
-      "MMR diversification prevents homogeneous results",
-      "Sub-50ms recommendation latency, zero LLM cost",
-      "Haversine geo-filtering before scoring",
-      "Admin-configurable scoring weights for A/B testing",
+      "<50ms latency, $0 LLM cost",
+      "Cosine similarity + MMR diversification",
+      "Haversine geo-filtering",
+      "Admin-configurable scoring weights",
+      "Multi-frontend: consumer, admin, widget, B2B",
     ],
   },
   {
@@ -51,11 +51,11 @@ export const caseStudies: CaseStudy[] = [
     outcome:
       "Cache hit rate of ~40% for regular journalers reduces API calls significantly. The fallback chain means zero downtime for sentiment analysis — users never see an error. TextBlob quality is acceptable for fallback (accuracy ~70% vs ~85% for the RoBERTa model). The day-key migration system handles backward compatibility when the entry schema evolved, preventing data loss for existing users.",
     highlights: [
-      "3-tier fallback: LRU cache → HF API → TextBlob",
-      "~40% cache hit rate for regular users",
-      "Exponential backoff retry for rate limits",
-      "Dual deployment: Uvicorn + AWS Lambda (Mangum)",
-      "Day-key migration for schema evolution",
+      "Zero downtime: 3-tier fallback chain",
+      "~40% cache hit rate, fewer API calls",
+      "85% accuracy (RoBERTa) / 70% fallback (TextBlob)",
+      "Dual deploy: Uvicorn + AWS Lambda",
+      "Backward-compatible schema migration",
     ],
   },
 ];
