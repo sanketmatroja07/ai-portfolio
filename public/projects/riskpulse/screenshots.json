@@ -1,0 +1,44 @@
+[
+  {
+    "id": "01-login",
+    "url": "/projects/riskpulse/01-login.png",
+    "caption": "Secure sign-in with role-based quick login",
+    "order": 1
+  },
+  {
+    "id": "02-dashboard",
+    "url": "/projects/riskpulse/02-dashboard.png",
+    "caption": "Real-time risk operations dashboard with KPIs",
+    "order": 2
+  },
+  {
+    "id": "03-alerts",
+    "url": "/projects/riskpulse/03-alerts.png",
+    "caption": "Alert inbox with filters and bulk actions",
+    "order": 3
+  },
+  {
+    "id": "04-cases",
+    "url": "/projects/riskpulse/04-cases.png",
+    "caption": "Case management workspace",
+    "order": 4
+  },
+  {
+    "id": "05-case-detail",
+    "url": "/projects/riskpulse/05-case-detail.png",
+    "caption": "Case workspace with entity graph and AI narratives",
+    "order": 5
+  },
+  {
+    "id": "06-entities",
+    "url": "/projects/riskpulse/06-entities.png",
+    "caption": "Entity explorer and graph exploration",
+    "order": 6
+  },
+  {
+    "id": "07-rules",
+    "url": "/projects/riskpulse/07-rules.png",
+    "caption": "Detection rule engine configuration",
+    "order": 7
+  }
+]

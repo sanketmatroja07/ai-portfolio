@@ -32,6 +32,8 @@ export interface Project {
   featured: boolean;
   order: number;
   repoUrl: string | null;
+  /** Public production URL (e.g. deployed product). */
+  liveUrl?: string | null;
   repoPath: string;
   technologies: string[];
   tags: string[];

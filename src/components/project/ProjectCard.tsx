@@ -38,16 +38,24 @@ export function ProjectCard({ project, variant = "grid" }: ProjectCardProps) {
           >
             <div
               className={cn(
-                "h-48 bg-gradient-to-br flex items-center justify-center relative overflow-hidden",
-                project.gradient
+                "h-48 flex items-center justify-center relative overflow-hidden",
+                !project.screenshots?.length && `bg-gradient-to-br ${project.gradient}`
               )}
             >
+              {project.screenshots?.length ? (
+                <img
+                  src={project.screenshots[0].url}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover object-top"
+                />
+              ) : null}
               <motion.div
                 initial={false}
                 whileHover={prefersReducedMotion ? {} : { scale: 1.1, rotate: 5 }}
                 transition={{ duration: 0.4 }}
+                className={cn("relative", project.screenshots?.length && "opacity-0 group-hover:opacity-100 transition-opacity")}
               >
-                <Icon className="w-16 h-16 text-white/30" aria-hidden="true" />
+                <Icon className={cn("w-16 h-16", project.screenshots?.length ? "text-white" : "text-white/30")} aria-hidden="true" />
               </motion.div>
               {/* Shimmer on hover */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 overflow-hidden">
@@ -86,11 +94,18 @@ export function ProjectCard({ project, variant = "grid" }: ProjectCardProps) {
         >
           <div
             className={cn(
-              "h-32 bg-gradient-to-br flex items-center justify-center relative overflow-hidden",
-              project.gradient
+              "h-32 flex items-center justify-center relative overflow-hidden",
+              !project.screenshots?.length && `bg-gradient-to-br ${project.gradient}`
             )}
           >
-            <Icon className="w-10 h-10 text-white/30" aria-hidden="true" />
+            {project.screenshots?.length ? (
+              <img
+                src={project.screenshots[0].url}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover object-top"
+              />
+            ) : null}
+            <Icon className={cn("w-10 h-10 relative", project.screenshots?.length ? "text-white drop-shadow" : "text-white/30")} aria-hidden="true" />
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 overflow-hidden">
               <div className="absolute inset-0 -translate-x-full group-hover:animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             </div>

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowLeft, ArrowRight, ExternalLink, Github } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, Github, Globe } from "lucide-react";
 import { projects, getProjectBySlug, getProjectsByTechnology } from "@/data/projects";
 import { getCaseStudyForProject } from "@/data/case-studies";
 import { TechStack } from "@/components/project/TechStack";
@@ -9,6 +9,7 @@ import { FeatureList } from "@/components/project/FeatureList";
 import { MetadataTable } from "@/components/project/MetadataTable";
 import { ArchitectureDiagram } from "@/components/project/ArchitectureDiagram";
 import { ProjectCard } from "@/components/project/ProjectCard";
+import { ScreenshotGallery } from "@/components/project/ScreenshotGallery";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { cn } from "@/lib/utils";
@@ -57,11 +58,21 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-12">
         <div
           className={cn(
-            "lg:col-span-3 h-64 lg:h-auto rounded-2xl bg-gradient-to-br flex items-center justify-center",
-            project.gradient
+            "lg:col-span-3 h-64 lg:h-auto min-h-64 rounded-2xl overflow-hidden flex items-center justify-center relative",
+            project.screenshots?.length > 0
+              ? "bg-zinc-900"
+              : `bg-gradient-to-br ${project.gradient}`
           )}
         >
-          <span className="text-6xl text-white/20 font-bold">{project.title[0]}</span>
+          {project.screenshots?.length > 0 ? (
+            <img
+              src={project.screenshots[0].url}
+              alt={`${project.title} screenshot`}
+              className="w-full h-full object-cover object-top"
+            />
+          ) : (
+            <span className="text-6xl text-white/20 font-bold">{project.title[0]}</span>
+          )}
         </div>
 
         <div className="lg:col-span-2 flex flex-col justify-center">
@@ -80,7 +91,18 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             {project.shortDescription}
           </p>
           <TechStack technologies={project.technologies} size="md" />
-          <div className="flex gap-3 mt-6">
+          <div className="flex flex-wrap gap-3 mt-6">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-orange-600 text-white text-sm font-medium hover:bg-orange-500 transition-colors"
+              >
+                <Globe size={14} aria-hidden="true" />
+                Live site
+              </a>
+            )}
             {project.repoUrl && (
               <a
                 href={project.repoUrl}
@@ -104,6 +126,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </div>
         </div>
       </div>
+
+      {/* Screenshots */}
+      {project.screenshots && project.screenshots.length > 0 && (
+        <ScreenshotGallery screenshots={project.screenshots} projectTitle={project.title} />
+      )}
 
       {/* Overview */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
