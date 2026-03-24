@@ -141,13 +141,22 @@ export const projects: Project[] = [
     featured: true,
     order: 3,
     repoUrl: "https://github.com/sanketmatroja07/mind-mirror",
+    liveUrl: "https://mind-mirror-phi.vercel.app",
     repoPath: "/Users/sanket/ai-journal-app",
     technologies: [
       "react", "vite", "javascript", "fastapi", "python", "mongodb",
       "huggingface", "aws-lambda",
     ],
     tags: ["ai", "nlp", "health", "sentiment-analysis", "journaling"],
-    screenshots: [],
+    screenshots: [
+      {
+        id: "landing",
+        url: "/projects/mind-mirror/landing.png",
+        caption:
+          "Marketing hero — AI reflection journal positioning with live tone analysis preview",
+        order: 1,
+      },
+    ],
     metadata: {
       entryPoint: "main.py / frontend/src/main.jsx",
       buildCommand: "cd frontend && npm run build",
@@ -242,13 +251,22 @@ export const projects: Project[] = [
     featured: true,
     order: 5,
     repoUrl: null,
+    liveUrl: "https://signalvault-vert.vercel.app",
     repoPath: "/Users/sanket/Cursor Projects/apps/signalvault",
     technologies: [
       "nextjs", "react", "typescript", "tailwindcss", "fastapi", "python",
       "supabase", "redis", "openai", "celery",
     ],
     tags: ["ai", "intelligence", "data-pipeline", "real-time", "aggregation"],
-    screenshots: [],
+    screenshots: [
+      {
+        id: "landing",
+        url: "/projects/signalvault/landing.png",
+        caption:
+          "Discover dashboard — validated startup ideas, demand signals, and workspace sidebar",
+        order: 1,
+      },
+    ],
     metadata: {
       entryPoint: "backend/main.py / src/app/page.tsx",
       buildCommand: "npm run build",
@@ -294,12 +312,21 @@ export const projects: Project[] = [
     featured: true,
     order: 6,
     repoUrl: null,
+    liveUrl: "https://moviematch-silk.vercel.app",
     repoPath: "/Users/sanket/Cursor Projects/apps/moviematch",
     technologies: [
       "react-native", "expo", "typescript", "firebase", "firestore",
     ],
     tags: ["mobile", "entertainment", "social", "real-time"],
-    screenshots: [],
+    screenshots: [
+      {
+        id: "landing",
+        url: "/projects/moviematch/landing.png",
+        caption:
+          "Couples landing — shared rooms, invite flow, and swipe-to-match positioning",
+        order: 1,
+      },
+    ],
     metadata: {
       entryPoint: "index.ts → expo start",
       buildCommand: "npx expo build",
