@@ -260,7 +260,7 @@ export const projects: Project[] = [
       "Privacy World (tryprivacy.world) helps users understand website privacy policies without legal jargon. It combines AI with a compliance-focused lens (including GDPR and CCPA) to produce fast, actionable summaries. The product is built as a modern Next.js experience with a dark, high-contrast UI, clear CTAs, and flows for analyzing policies and learning how the tool works.",
     type: "web",
     status: "active",
-    featured: false,
+    featured: true,
     order: 5,
     repoUrl: null,
     liveUrl: "https://tryprivacy.world/",
