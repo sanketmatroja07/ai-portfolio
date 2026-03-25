@@ -145,14 +145,6 @@ export function ResumeContent() {
                   ]}
                 />
 
-                <ProjectEntry
-                  title="ResumeTailor — AI Resume Optimization Tool"
-                  tech="Next.js, FastAPI, Anthropic Claude, LibreOffice"
-                  bullets={[
-                    "Built end-to-end pipeline: DOCX parse → block extraction → Anthropic Claude tailoring → DOCX/PDF export via headless LibreOffice for job-specific resume optimization",
-                  ]}
-                />
-
               </div>
             </Section>
 
