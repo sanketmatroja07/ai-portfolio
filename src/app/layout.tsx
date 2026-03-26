@@ -38,7 +38,7 @@ const jsonLd = {
   name: "Sanket Matroja",
   jobTitle: "AI Engineer",
   url: "https://sanketmatroja.com",
-  email: "sanket@sanketmatroja.com",
+  email: "sanketmatroja07@gmail.com",
   sameAs: [
     "https://www.linkedin.com/in/sanketmatroja07/",
     "https://github.com/sanketmatroja07",

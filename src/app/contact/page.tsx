@@ -38,10 +38,10 @@ export default function ContactPage() {
             </h2>
 
             <ContactSocialCard
-              href="mailto:sanket@sanketmatroja.com"
+              href="mailto:sanketmatroja07@gmail.com"
               icon={<Mail size={18} />}
               label="Email"
-              value="sanket@sanketmatroja.com"
+              value="sanketmatroja07@gmail.com"
             />
             <ContactSocialCard
               href="https://github.com/sanketmatroja07"

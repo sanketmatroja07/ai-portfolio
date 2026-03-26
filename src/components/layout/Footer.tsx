@@ -7,7 +7,7 @@ import { MagneticButton } from "@/components/effects/MagneticButton";
 const socialLinks = [
   { href: "https://github.com/sanketmatroja07", icon: Github, label: "GitHub" },
   { href: "https://www.linkedin.com/in/sanketmatroja07/", icon: Linkedin, label: "LinkedIn" },
-  { href: "mailto:sanket@sanketmatroja.com", icon: Mail, label: "Email" },
+  { href: "mailto:sanketmatroja07@gmail.com", icon: Mail, label: "Email" },
 ];
 
 const navLinks = [
